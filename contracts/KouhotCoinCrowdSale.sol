@@ -1,16 +1,22 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.19;
 
 import './KouhotCoin.sol';
-import 'zeppelin-solidity/contracts/crowdsale/Crowdsale.sol';
+import 'zeppelin-solidity/contracts/crowdsale/emission/MintedCrowdsale.sol';
+import 'zeppelin-solidity/contracts/crowdsale/validation/TimedCrowdsale.sol';
 
 
-contract KouhotCoinCrowdsale is Crowdsale {
+contract KouhotCoinCrowdsale is TimedCrowdsale, MintedCrowdsale {
+  constructor
+    (
+     uint256 _openingTime,
+     uint256 _closingTime,
+     uint256 _rate,
+     address _wallet,
+     MintableToken _token
+    )
+    public
+    Crowdsale(_rate, _wallet, _token)
+    TimedCrowdsale(_openingTime, _closingTime) {
 
-  function KouhotCoinCrowdsale(uint256 _startTime, uint256 _endTime, uint256 _rate, address _wallet) public
-    Crowdsale(_startTime, _endTime, _rate, _wallet) {
     }
-
-  function createTokenContract() internal returns (MintableToken) {
-    return new KouhotCoin();
-  }
 }

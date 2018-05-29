@@ -1,10 +1,24 @@
-const KouhotCoinCrowdsale = artifacts.require("./KouhotCoinCrowdsale.sol")
+const KouhotCoinCrowdsale = artifacts.require('./KouhotCoinCrowdsale.sol');
+const KouhotCoin = artifacts.require('./KouhotCoin.sol');
 
 module.exports = function(deployer, network, accounts) {
-  const startTime = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1
-  const endTime = startTime + (60 * 10)
-  const rate = new web3.BigNumber(1000)
-  const wallet = accounts[0]
+    const openingTime = web3.eth.getBlock('latest').timestamp + 2; // two secs in the future
+    const closingTime = openingTime + 86400 * 20; // 20 days
+    const rate = new web3.BigNumber(1000);
+    const wallet = accounts[1];
 
-  deployer.deploy(KouhotCrowdsale, startTime, endTime, rate, wallet)
+    return deployer
+        .then(() => {
+            return deployer.deploy(KouhotCoin);
+        })
+        .then(() => {
+            return deployer.deploy(
+                KouhotCoinCrowdsale,
+                openingTime,
+                closingTime,
+                rate,
+                wallet,
+                KouhotCoin.address
+            );
+        });
 };

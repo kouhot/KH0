@@ -1,5 +1,5 @@
-pragma solidity ^0.4.18;
-import "zeppelin-solidity/contracts/token/MintableToken.sol";
+pragma solidity ^0.4.19;
+import "zeppelin-solidity/contracts/token/ERC20/MintableToken.sol";
 
 contract KouhotCoin is MintableToken {
   string public name = "KOUHOT COIN";
