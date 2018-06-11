@@ -3,3 +3,8 @@
 - truffle@4.1.1
 - zeppelin-solidity@1.7.0
 - solidity@0.4.24
+
+## deploy
+- $ ganache-cli
+- $ truffle compile
+- $ truffle migrate
